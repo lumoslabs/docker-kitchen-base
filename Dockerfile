@@ -7,5 +7,5 @@ ENV container=docker \
 RUN yum -y update
 RUN yum install -y sudo curl which initscripts net-tools \
     && yum clean all \
-    && (curl -L https://www.opscode.com/chef/install.sh | bash -s -- -P chefdk) \
+    && (curl -L https://www.opscode.com/chef/install.sh | bash -s) \
     && ln -vs /opt/chefdk /opt/chef
