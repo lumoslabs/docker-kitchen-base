@@ -23,6 +23,8 @@ RUN yum install -y -d2 -e2 \
       git \
       initscripts \
       kernel-devel \
+      libffi \
+      libffi-devel \
       libxml2-devel \
       libxslt-devel \
       m4 \
@@ -54,8 +56,7 @@ RUN useradd --create-home --shell /bin/bash --home-dir /home/lumoslabs lumoslabs
     && chown lumoslabs /opt/rbenv \
     && su -l -c 'git clone --depth 1 https://github.com/sstephenson/rbenv.git /opt/rbenv' lumoslabs \
     && su -l -c 'git clone --depth 1 https://github.com/sstephenson/ruby-build.git /opt/rbenv/plugins/ruby_build' lumoslabs \
-    && su -l -c 'source /etc/profile.d/rbenv.sh ; rbenv install -v 2.1.6 ; rbenv global 2.1.6 ; gem install bundler' lumoslabs
-    # && rbenv install --verbose 2.1.6 \
-    # && rbenv global 2.1.6 \
+    && su -l -c 'source /etc/profile.d/rbenv.sh ; RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install -v 2.1.6 ; rbenv global 2.1.6' lumoslabs
+RUN su -l -c 'source /etc/profile.d/rbenv.sh ; gem install bundler' lumoslabs
 RUN (curl -L https://www.opscode.com/chef/install.sh | bash -s) \
     && ln -vs /opt/chefdk /opt/chef
