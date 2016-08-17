@@ -1,21 +1,25 @@
 FROM centos:6
 
 ENV container=docker \
+    GIT_VERSION=2.8.1 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
-ADD rbenv.sh /etc/profile.d/
+
 RUN yum -y update
-RUN yum install -y -d1 -e2 \
+RUN yum install -y -d2 -e2 \
       autoconf \
       bison \
       build-essential \
       bzip2 \
       curl \
+      curl-devel \
+      expat-devel \
       flex \
       gcc \
       gcc-c++ \
       gettext \
+      gettext-devel \
       git \
       initscripts \
       kernel-devel \
@@ -27,11 +31,23 @@ RUN yum install -y -d1 -e2 \
       net-tools \
       openssl-devel \
       patch \
+      perl-devel \
       readline-devel \
       sudo \
       which \
       zlib-devel \
     && yum clean all
+
+ADD rbenv.sh /etc/profile.d/
+ADD https://github.com/git/git/archive/v${GIT_VERSION}.tar.gz /tmp/git.tgz
+
+RUN cd /tmp \
+    && tar xvzf git.tgz \
+    && cd git-${GIT_VERSION} \
+    && make configure \
+    && ./configure --prefix=/usr \
+    && make all \
+    && make install
 RUN useradd --create-home --shell /bin/bash --home-dir /home/lumoslabs lumoslabs \
     && mkdir -p /opt/rbenv \
     && chmod 2775 /opt/rbenv \
