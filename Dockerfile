@@ -54,7 +54,7 @@ RUN useradd --create-home --shell /bin/bash --home-dir /home/lumoslabs lumoslabs
     && chown lumoslabs /opt/rbenv \
     && su -l -c 'git clone --depth 1 https://github.com/sstephenson/rbenv.git /opt/rbenv' lumoslabs \
     && su -l -c 'git clone --depth 1 https://github.com/sstephenson/ruby-build.git /opt/rbenv/plugins/ruby_build' lumoslabs \
-    && su -l -c 'source /etc/profile.d/rbenv.sh ; rbenv install -v 2.1.6 ; rbenv global 2.1.6' lumoslabs
+    && su -l -c 'source /etc/profile.d/rbenv.sh ; rbenv install -v 2.1.6 ; rbenv global 2.1.6 ; gem install bundler' lumoslabs
     # && rbenv install --verbose 2.1.6 \
     # && rbenv global 2.1.6 \
 RUN (curl -L https://www.opscode.com/chef/install.sh | bash -s) \
