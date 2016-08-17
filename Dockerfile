@@ -6,7 +6,7 @@ ENV container=docker \
     LC_ALL=en_US.UTF-8
 ADD rbenv.sh /etc/profile.d/
 RUN yum -y update
-RUN DEBIAN_FRONTEND=noninteractive yum install -y -d1 -e2 \
+RUN yum install -y -d1 -e2 \
       autoconf \
       bison \
       build-essential \
