@@ -4,7 +4,8 @@ ENV container=docker \
     GIT_VERSION=2.8.1 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8
+    LC_ALL=en_US.UTF-8 \
+    RUBY_VERSION=2.1.9
 
 RUN yum -y update
 RUN yum install -y -d2 -e2 \
@@ -56,7 +57,7 @@ RUN useradd --create-home --shell /bin/bash --home-dir /home/lumoslabs lumoslabs
     && chown lumoslabs /opt/rbenv \
     && su -l -c 'git clone --depth 1 https://github.com/sstephenson/rbenv.git /opt/rbenv' lumoslabs \
     && su -l -c 'git clone --depth 1 https://github.com/sstephenson/ruby-build.git /opt/rbenv/plugins/ruby_build' lumoslabs \
-    && su -l -c 'source /etc/profile.d/rbenv.sh ; RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install -v 2.1.6 ; rbenv global 2.1.6' lumoslabs
+    && su -l -c "source /etc/profile.d/rbenv.sh ; RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install -v ${RUBY_VERSION} ; rbenv global ${RUBY_VERSION}" lumoslabs
 RUN echo 'gem: --no-document' >/root/.gemrc \
     && echo 'gem: --no-document' >/etc/gemrc \
     && su -l -c 'source /etc/profile.d/rbenv.sh ; echo "gem: --no-document" >/home/lumoslabs/.gemrc ; gem install bundler --no-document' lumoslabs
